@@ -1,0 +1,81 @@
+[package]
+name = "luraph_deobf_rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["ICEDRAGON Engine"]
+description = "High-performance, multi-threaded Luraph v15 deobfuscator and CFG lifter in pure Rust"
+license = "MIT OR Apache-2.0"
+default-run = "luraph_deobf_rs"
+
+[lib]
+name = "luraph_deobf_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "luraph_deobf_rs"
+path = "src/main.rs"
+
+[dependencies]
+# ---------------------------------------------------------
+# Path Dependencies to self-contained logly crates
+# ---------------------------------------------------------
+logly-core = { package = "core", path = "crates/logly/core" }
+logly-sink = { package = "sink", path = "crates/logly/sink" }
+logly-concurrency = { package = "concurrency", path = "crates/logly/concurrency" }
+logly-format = { package = "format", path = "crates/logly/format" }
+logly-record = { package = "record", path = "crates/logly/record" }
+logly-levels = { package = "levels", path = "crates/logly/levels" }
+logly-filter = { package = "filter", path = "crates/logly/filter" }
+logly-color = { package = "color", path = "crates/logly/color" }
+logly-error = { package = "error", path = "crates/logly/error" }
+logly-rotate = { package = "rotate", path = "crates/logly/rotate" }
+logly-compress = { package = "compress", path = "crates/logly/compress" }
+logly-config = { package = "config", path = "crates/logly/config" }
+
+# ---------------------------------------------------------
+# Concurrency & Arena Allocation Primitives
+# ---------------------------------------------------------
+bumpalo = { version = "3.16", features = ["collections", "boxed"] }
+rayon = "1.10"
+
+# ---------------------------------------------------------
+# CLI & Terminal Telemetry
+# ---------------------------------------------------------
+clap = { version = "4.5", features = ["derive", "cargo"] }
+indicatif = { version = "0.17", features = ["rayon"] }
+console = "0.15"
+
+# ---------------------------------------------------------
+# Error Handling & Utilities
+# ---------------------------------------------------------
+thiserror = "1.0"
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+indexmap = "2.2"
+smallvec = { version = "1.13", features = ["const_generics"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+
+[dev-dependencies]
+tempfile = "3.14"
+
+# ---------------------------------------------------------
+# Compiler Build Profiles
+# ---------------------------------------------------------
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+overflow-checks = false
+
+[profile.dev]
+opt-level = 0
+debug = true
+incremental = true
+panic = "abort"
+
+[profile.test]
+opt-level = 1
+debug = true

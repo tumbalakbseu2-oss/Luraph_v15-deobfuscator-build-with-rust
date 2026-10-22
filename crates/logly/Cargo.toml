@@ -1,0 +1,53 @@
+[workspace]
+members = [
+    "color",
+    "compress",
+    "concurrency",
+    "config",
+    "core",
+    "error",
+    "filter",
+    "format",
+    "levels",
+    "network",
+    "record",
+    "rotate",
+    "sink",
+    "source",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.2.5"
+edition = "2024"
+license = "MIT"
+authors = ["Muhammad Fiaz <contact@muhammadfiaz.com>"]
+repository = "https://github.com/muhammad-fiaz/logly"
+
+[workspace.dependencies]
+color = { path = "color" }
+compress = { path = "compress" }
+concurrency = { path = "concurrency" }
+config = { path = "config" }
+engine = { package = "core", path = "core" }
+error = { path = "error" }
+filter = { path = "filter" }
+format = { path = "format" }
+levels = { path = "levels" }
+network = { path = "network" }
+record = { path = "record" }
+rotate = { path = "rotate" }
+sink = { path = "sink" }
+source = { path = "source" }
+
+pyo3 = { version = "0.29.2", features = ["extension-module"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+ureq = { version = "3", features = ["json"] }
+hostname = "0.4"
+bzip2 = "0.6"
+flate2 = "1"
+xz2 = "0.1"
+zip = { version = "8", default-features = false, features = ["deflate"] }
+zstd = { version = "0.14", default-features = false, features = ["zstdmt"] }
